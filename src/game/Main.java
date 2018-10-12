@@ -1,7 +1,11 @@
 package game;
 
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -9,6 +13,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+
+import java.util.Random;
 
 public class Main extends Application {
 
@@ -23,6 +29,8 @@ public class Main extends Application {
     Image pOneImage, pTwoImage;
     ImageView pOneImageView, pTwoImageView;
     Player playerOne, playerTwo;
+    Button diceRoll;
+    Label diceLabel;
 
 
     @Override
@@ -38,13 +46,52 @@ public class Main extends Application {
         drawMap();
         gameBoard.displayMap();
 
+        // adds a button to dice roll player 1
+        diceRoll = new Button("Roll");
+        diceRoll.setTranslateX(850);
+        diceRoll.setTranslateY(100);
+        root.getChildren().add(diceRoll);
+
+        // adds a text box for dice player 1
+        diceLabel = new Label("Roll: ");
+        diceLabel.setTranslateX(850);
+        diceLabel.setTranslateY(150);
+        root.getChildren().add(diceLabel);
+
+
+        // places the players images
         placePlayerOne();
-        loadPlayerOneImage();
         placePlayerTwo();
+
+        // loads images
+        loadPlayerOneImage();
         loadPlayerTwoImage();
 
+        // set current images (ImageView) to the Pane
         root.getChildren().add(pOneImageView);
         root.getChildren().add(pTwoImageView);
+
+        //rolls dice if the button is pushed
+        diceRoll.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e) {
+                rollDice();
+            }
+        });
+
+
+
+
+    }
+
+    public int rollDice(){
+        Random rand = new Random();
+        int randInt = rand.nextInt(6) + 1;
+
+        diceLabel.setText("Roll: " + randInt);
+
+        return randInt;
+
     }
 
     public void drawMap() {
