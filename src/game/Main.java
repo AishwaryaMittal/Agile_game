@@ -47,8 +47,8 @@ public class Main extends Application {
         gameBoard.displayMap();
 
         // adds a button to dice roll player 1
-        diceRoll = new Button("Roll Player 1");
-        diceRoll.setTranslateX(805);
+        diceRoll = new Button("Roll");
+        diceRoll.setTranslateX(850);
         diceRoll.setTranslateY(100);
         root.getChildren().add(diceRoll);
 
