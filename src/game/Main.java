@@ -10,8 +10,11 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Text;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.Random;
@@ -31,6 +34,16 @@ public class Main extends Application {
     Player playerOne, playerTwo;
     Button diceRoll;
     Label diceLabel;
+    String[] team1questions;
+    String[] team2questions;
+    //temporary buttons and variables
+    Button tmpT1Button;
+    Button tmpT2Button;
+    Boolean questionDisplay = false;
+    int t1count = 0;
+    int t2count = 0;
+    //display question stack pane
+    StackPane stack;
 
 
     @Override
@@ -59,6 +72,28 @@ public class Main extends Application {
         root.getChildren().add(diceLabel);
 
 
+        // initialize arrays with questions
+        team1questions = new String[] {"p1", "p2", "p3", "p4", "p5"};
+        team2questions = new String[] { "2p1", "2p2", "2p3", "2p4", "2p5"};
+
+        // temporary testing for printing questions to console
+        for(String x : team1questions){
+            System.out.println("Team 1 Question: " + x);
+        }
+        for(String y : team2questions){
+            System.out.println("Team 2 Question: " + y);
+        }
+
+        // adds two temporary buttons to display questions for player 1 and player 2
+        tmpT1Button = new Button("Team 1 Button");
+        tmpT1Button.setTranslateX(850);
+        tmpT1Button.setTranslateY(200);
+        root.getChildren().add(tmpT1Button);
+        tmpT2Button = new Button("Team 2 Button");
+        tmpT2Button.setTranslateX(850);
+        tmpT2Button.setTranslateY(250);
+        root.getChildren().add(tmpT2Button);
+
         // places the players images
         placePlayerOne();
         placePlayerTwo();
@@ -79,9 +114,50 @@ public class Main extends Application {
             }
         });
 
+        //handler for t1button
+        tmpT1Button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){displayQuestion(team1questions, t1count); }
+        });
+
+        //handler for t2button
+        tmpT2Button.setOnAction(new EventHandler<ActionEvent>(){
+            @Override
+            public void handle(ActionEvent e){ displayQuestion(team2questions, t2count); }
+        });
 
 
+    }
 
+    public void displayQuestion(String[] questions, int count){
+        if(questionDisplay == false){
+            Rectangle rect = new Rectangle(xDimension, yDimension, 8*scale, 4*scale); //messed with scale of rect a bit
+            rect.setStroke(Color.BLACK); //black outline
+            rect.setFill(Color.WHITE);
+            String question;
+            if(count >= questions.length){
+                question = "Error, not enough questions";
+            }
+            else {
+                question = questions[count];
+            }
+            if(t1count == count){
+                t1count++;
+            }
+            else if(t2count == count){
+                t2count++;
+            }
+            Text text = new Text(10, 50, question);
+            text.setFont(new Font(30));
+            stack = new StackPane();
+            stack.getChildren().addAll(rect, text);
+            root.getChildren().add(stack);
+            questionDisplay = true;
+        }
+        else{
+            root.getChildren().remove(stack);
+            questionDisplay = false;
+        }
     }
 
     public int rollDice(){
