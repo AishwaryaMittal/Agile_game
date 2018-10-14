@@ -31,6 +31,8 @@ public class Main extends Application {
     Player playerOne, playerTwo;
     Button diceRoll;
     Label diceLabel;
+    String[] team1questions;
+    String[] team2questions;
 
 
     @Override
@@ -58,6 +60,18 @@ public class Main extends Application {
         diceLabel.setTranslateY(150);
         root.getChildren().add(diceLabel);
 
+        // initialize arrays with questions
+        team1questions = new String[] {"p1", "p2", "p3", "p4", "p5"};
+        team2questions = new String[] { "2p1", "2p2", "2p3", "2p4", "2p5"};
+
+        //Temporary testing for printing questions to console
+        for(String x : team1questions){
+            System.out.println("Team 1 Question: " + x);
+        }
+
+        for(String y : team2questions){
+            System.out.println("Team 2 Question: " + y);
+        }
 
         // places the players images
         placePlayerOne();
