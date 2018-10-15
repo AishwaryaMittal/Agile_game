@@ -33,7 +33,7 @@ public class Main extends Application {
     ImageView pOneImageView, pTwoImageView;
     Player playerOne, playerTwo;
     Button diceRoll;
-    Label diceLabel;
+    Label diceLabel, playerOneScore, playerTwoScore;
     String[] team1questions;
     String[] team2questions;
     //temporary buttons and variables
@@ -70,6 +70,16 @@ public class Main extends Application {
         diceLabel.setTranslateX(850);
         diceLabel.setTranslateY(150);
         root.getChildren().add(diceLabel);
+
+        playerOneScore = new Label("Player One: ");
+        playerOneScore.setTranslateX(10);
+        playerOneScore.setTranslateY(415);
+        root.getChildren().add(playerOneScore);
+
+        playerTwoScore = new Label("Player Two: ");
+        playerTwoScore.setTranslateX(710);
+        playerTwoScore.setTranslateY(415);
+        root.getChildren().add(playerTwoScore);
 
 
         // initialize arrays with questions
