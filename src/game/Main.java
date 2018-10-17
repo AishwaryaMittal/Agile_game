@@ -25,12 +25,17 @@ public class Main extends Application {
     final int yDimension = 4;
     final int scale = 100; // Scale everything by 90. You can experiment here.
     final int playerScale = 50;
+    final int diceScale = 75;
     Pane root;
     Scene scene;
     GameBoard gameBoard = GameBoard.getInstance(xDimension, yDimension);
     int[][] gameMap;
     Image pOneImage, pTwoImage;
     ImageView pOneImageView, pTwoImageView;
+    
+    Image diceImage;
+    ImageView diceImageView;
+    
     Player playerOne, playerTwo;
     Button diceRoll;
     Label diceLabel, playerOneScore, playerTwoScore;
@@ -115,7 +120,7 @@ public class Main extends Application {
         // set current images (ImageView) to the Pane
         root.getChildren().add(pOneImageView);
         root.getChildren().add(pTwoImageView);
-
+        
         //rolls dice if the button is pushed
         diceRoll.setOnAction(new EventHandler<ActionEvent>(){
             @Override
@@ -175,6 +180,9 @@ public class Main extends Application {
         int randInt = rand.nextInt(6) + 1;
 
         diceLabel.setText("Roll: " + randInt);
+        loadDiceRollImage(randInt);
+        
+        root.getChildren().add(diceImageView);
 
         return randInt;
 
@@ -219,6 +227,14 @@ public class Main extends Application {
         pTwoImageView = new ImageView(pTwoImage);
         pTwoImageView.setX(playerTwo.getPlayerLocation().x + playerScale/2);
         pTwoImageView.setY(playerTwo.getPlayerLocation().y + playerScale);
+    }
+    
+    public void loadDiceRollImage(int rollNumber){
+        diceImage = new Image(rollNumber + ".png", diceScale, diceScale, true, true);
+        diceImageView = new ImageView(diceImage);
+        diceImageView.setX(900);
+        diceImageView.setY(100);
+
     }
 
 
